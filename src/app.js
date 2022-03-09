@@ -13,7 +13,7 @@ const theatersRouter = require("./theaters/theaters.router");
 const notFound = require("./errors/notFound");
 const errorhandler = require("./errors/errorHandler");
 
-// app.use("/movies", moviesRouter);
+app.use("/movies", moviesRouter);
 app.use("reviews", reviewsRouter);
 app.use("/theaters", theatersRouter);
 
