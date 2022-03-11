@@ -53,7 +53,8 @@ function readIsShowingTheaters(movie_id) {
   return knex("theaters as t")
     .join("movies_theaters as mt", "t.theater_id", "mt.theater_id")
     .select("t.*")
-    .where({ "mt.movie_id": movie_id });
+    .where({ "mt.movie_id": movie_id })
+    .andWhere({ "mt.is_showing": true});
 }
 
 // return movie by id with reviews
