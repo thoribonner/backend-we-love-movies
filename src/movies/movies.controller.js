@@ -5,11 +5,12 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 async function movieExists(req, res, nxt) {
   const foundMovie = await service.read(req.params.movieId);
 
-  if (foundMovie) {
-    res.locals.movie = foundMovie;
-    return nxt();
+  if (!foundMovie) {
+    return nxt({ status: 404, message: `Movie cannot be found.` });
   }
-  nxt({ status: 404, message: `Movie cannot be found.` });
+  
+  res.locals.movie = foundMovie;
+  nxt();
 }
 
 // return all movies || is_showing movies
@@ -25,9 +26,7 @@ async function list(req, res) {
 
 // read movie by id from params
 function read(req, res) {
-  const { movie: data } = res.locals;
-  
-  res.json({ data });
+  res.json({ data: res.locals.movie });
 }
 
 // return movie with theaters showing at
